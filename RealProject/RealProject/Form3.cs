@@ -58,7 +58,7 @@ namespace RealProject
 
         public int VakaSorgu(DateTime now1, DateTime now2) {
 
-
+                
 
             SqlConnecteds connecteds = new SqlConnecteds();
             SqlDataAdapter adapter = new SqlDataAdapter("Select *From Taslak1 Where Pcr=@Pcr and Fakülte=@Fakülte and Bölüm=@Bölüm and Tarih Between @Begin and @Finish ", connecteds.sqlConnectionOn());
@@ -108,6 +108,8 @@ namespace RealProject
 
         private void SmplGöster_Click(object sender, EventArgs e)
         {
+            PcrGrafik.Series[0].Points.Clear();
+
             SqlConnecteds connecteds = new SqlConnecteds();
             DateTime now1 = DateTime.Now;
             DateTime now2 = DateTime.Now.AddMonths(-1);
@@ -129,7 +131,8 @@ namespace RealProject
             int Ay2= Convert.ToInt32(Ay)-1;
             for (int f = 0; f < 12; f++)
             {
-                PcrGrafik.Series["Aylar"].Points.AddXY(aylar[Ay1-f], vakalar[Ay2-f]);}
+                PcrGrafik.Series["Aylar"].Points.AddXY(aylar[Ay1-f], vakalar[f]);
+            }
             double toplamvaka=0;
             foreach (int s in vakalar) {
                 toplamvaka = toplamvaka + s;
